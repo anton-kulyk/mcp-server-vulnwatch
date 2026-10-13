@@ -119,6 +119,50 @@ pytest            # offline unit + stdio transport tests
 No API token is required to run the test suite — network is mocked and the
 auth/confused-deputy gates are asserted directly.
 
+## Example output
+
+Real output from a live account (trimmed). `vw_get_stats`:
+
+```json
+{
+  "success": true,
+  "data": {
+    "free_monthly_allowance": { "limit": 10, "used": 2, "remaining": 8 },
+    "concurrency": { "max_in_progress": 1, "in_progress": 0 },
+    "totals": { "completed": 2, "failed": 0, "in_progress": 0 },
+    "credits_left": 5319
+  }
+}
+```
+
+`vw_scan_report` returns a full vulnerability report keyed by `score`,
+`scan_highlights` (severity/source breakdown, SSL, performance),
+`fingerprint` (CMS/version/theme/plugins), `cve_summary`, and
+`all_findings` — a list of findings each carrying `severity`, `owasp`, `cwe`,
+`cve`, `risk_score`, `recommendations` and `references`. Shape (trimmed):
+
+```json
+{
+  "success": true,
+  "data": {
+    "score": 90,
+    "scan_type_label": "Standard Scan",
+    "fingerprint": { "cms": "wordpress", "cms_ver": "6.9.4" },
+    "scan_highlights": {
+      "issues_by_severity": { "critical": 1, "high": 33, "medium": 7, "low": 8 }
+    },
+    "all_findings": [
+      { "title": "Webshell Detection", "severity": "critical",
+        "owasp": "...", "cwe": "...", "recommendations": "..." }
+    ]
+  }
+}
+```
+
+`vw_submit_scan` returns the new scan's uuid; poll it with `vw_scan_status`
+(`progress` + per-step `scan_steps`) and fetch the finished report with
+`vw_scan_report`.
+
 ## Part of the VulnWatch ecosystem
 
 - 🏠 **Project hub & docs** — [anton-kulyk.github.io/vulnwatch-project](https://anton-kulyk.github.io/vulnwatch-project/)
