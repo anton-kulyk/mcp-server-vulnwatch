@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-server-vulnwatch"
+version = "0.1.0"
+description = "VulnWatch MCP server: read-mostly bridge to the VulnWatch Public Developer API"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Anton Kulyk" }]
+keywords = ["mcp", "vulnwatch", "security", "scanner", "api"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Security",
+]
+dependencies = [
+    "fastmcp>=2.0.0",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+vulnwatch-mcp = "vulnwatch_mcp:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vulnwatch_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
