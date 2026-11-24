@@ -8,6 +8,40 @@ the VulnWatch **Public Developer API**.
 > client over its HTTPS API — the scanning engine and all data stay behind the
 > API. No vulnerability data ever leaves the platform through this bridge.
 
+## Hosted remote server — no install (recommended)
+
+The fastest way to use VulnWatch from any MCP client is the **hosted remote
+server** — no Python, no pip, no local process:
+
+```
+https://mcp.vulnwatch.tech/mcp
+```
+
+Authenticate with a [VulnWatch API token](https://app.vulnwatch.tech)
+(Dashboard → **API tokens**) as a bearer token. Full docs, copy-paste configs
+for Claude Desktop / Claude Code / Cursor / Windsurf and an FAQ live at
+**[vulnwatch.tech/mcp](https://vulnwatch.tech/mcp)**; machine-readable
+metadata is served at
+[`/.well-known/mcp/server.json`](https://mcp.vulnwatch.tech/.well-known/mcp/server.json)
+(MCP Registry name: `io.github.anton-kulyk/vulnwatch`).
+
+Example client config (remote):
+
+```json
+{
+  "mcpServers": {
+    "vulnwatch": {
+      "type": "streamable_http",
+      "url": "https://mcp.vulnwatch.tech/mcp",
+      "headers": { "Authorization": "Bearer vw_YOUR_TOKEN" }
+    }
+  }
+}
+```
+
+This repository remains the **self-hosted Python bridge** for the same tools —
+use it if you want to run the server locally (stdio) or inspect the code.
+
 ## Features
 
 - **Read-mostly by design.** Account quota, scan history, per-scan status and
