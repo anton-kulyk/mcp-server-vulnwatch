@@ -23,7 +23,7 @@ for Claude Desktop / Claude Code / Cursor / Windsurf and an FAQ live at
 **[vulnwatch.tech/mcp](https://vulnwatch.tech/mcp)**; machine-readable
 metadata is served at
 [`/.well-known/mcp/server.json`](https://mcp.vulnwatch.tech/.well-known/mcp/server.json)
-(MCP Registry name: `io.github.anton-kulyk/vulnwatch`).
+(MCP Registry name: `tech.vulnwatch/vulnwatch`).
 
 Example client config (remote):
 
