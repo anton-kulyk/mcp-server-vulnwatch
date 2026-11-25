@@ -44,6 +44,9 @@ Example client config (remote):
 
 This repository remains the **self-hosted Python bridge** for the same tools —
 use it if you want to run the server locally (stdio) or inspect the code.
+Note: the hosted server tracks the VulnWatch API and today exposes the full
+scan + phishing surface (history, status, reports, monitoring and the manual
+safe-domain allowlist), while this bridge ships the core five scan tools.
 
 ## Features
 
