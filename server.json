@@ -7,8 +7,15 @@
     "url": "https://github.com/anton-kulyk/mcp-server-vulnwatch",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://vulnwatch.tech/mcp",
+  "icons": [
+    {
+      "src": "https://vulnwatch.tech/apple-touch-icon.png",
+      "mimeType": "image/png",
+      "sizes": ["180x180"]
+    }
+  ],
   "remotes": [
     {
       "type": "streamable-http",
