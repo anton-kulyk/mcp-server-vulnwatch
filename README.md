@@ -44,9 +44,13 @@ Example client config (remote):
 
 This repository remains the **self-hosted Python bridge** for the same tools —
 use it if you want to run the server locally (stdio) or inspect the code.
-Note: the hosted server tracks the VulnWatch API and today exposes the full
-scan + phishing surface (history, status, reports, monitoring and the manual
-safe-domain allowlist), while this bridge ships the core five scan tools.
+Note: the hosted server tracks the VulnWatch API and today exposes eleven
+tools — `vw_get_stats`, `vw_scan_history`, `vw_scan_status`, `vw_scan_report`,
+`vw_submit_scan` and the phishing family `vw_phish_check`, `vw_phish_history`,
+`vw_phish_status`, `vw_phish_report`, `vw_phish_monitoring`,
+`vw_phish_monitoring_lookup` (write tools stay behind operator flags) — while
+this bridge ships the core five scan tools. The manual safe-domain allowlist
+tools are being rolled out and will land in the registry entry as 1.0.3.
 
 ## Features
 
