@@ -42,16 +42,28 @@ Example client config (remote):
 }
 ```
 
-This repository remains the **self-hosted Python bridge** for the same tools —
-use it if you want to run the server locally (stdio) or inspect the code.
-Note: the hosted server tracks the VulnWatch API and today exposes twelve
-tools — `vw_get_stats`, `vw_scan_history`, `vw_scan_status`, `vw_scan_report`,
-`vw_submit_scan` and the phishing family `vw_phish_check`, `vw_phish_history`,
-`vw_phish_status`, `vw_phish_report`, `vw_phish_monitoring`,
-`vw_phish_monitoring_lookup`, plus the manual safe-domain allowlist tool
-`vw_phish_safe_domains` (write tools stay behind operator flags) — while
-this bridge ships the core five scan tools. The registry entry is live as
-1.0.3 with the safe-domain tool and icon included.
+This repository remains the **self-hosted Python bridge** for the core scan
+tools — use it if you want to run the server locally (stdio) or inspect the
+code. It ships the core five scan tools (`vw_get_stats`, `vw_scan_history`,
+`vw_scan_status`, `vw_scan_report`, `vw_submit_scan`).
+
+The **hosted server** tracks the VulnWatch API and today exposes **fourteen**
+tools (registry entry live as **1.0.3**):
+
+- **Scan** — `vw_get_stats`, `vw_scan_history`, `vw_scan_status`,
+  `vw_scan_report`.
+- **Phishing (read)** — `vw_phish_history`, `vw_phish_status`,
+  `vw_phish_report`, `vw_phish_monitoring`, `vw_phish_monitoring_lookup`,
+  `vw_phish_safe_domains`.
+- **Submission (off by default)** — `vw_submit_scan` (spends a scan credit),
+  `vw_phish_check` (starts a phishing check), `vw_phish_mark_safe`,
+  `vw_phish_unmark_safe`.
+
+Ten of these are read-only and enabled by default. The four that create work
+(`vw_submit_scan`, `vw_phish_check`, `vw_phish_mark_safe`,
+`vw_phish_unmark_safe`) stay behind operator flags (`MCP_ALLOW_SCAN` /
+`MCP_ALLOW_PHISH`) until the account explicitly enables them. See the
+[Tools](#tools) section for the full hosted surface.
 
 ## Features
 
@@ -64,6 +76,31 @@ this bridge ships the core five scan tools. The registry entry is live as
   network and returns a clear error instead.
 
 ## Tools
+
+The **hosted remote server** exposes the full VulnWatch surface (14 tools).
+Read-only tools are enabled by default; submission tools are gated behind
+operator flags and appear only when the server host enables them.
+
+| Tool | Access | Default | Description |
+| --- | --- | --- | --- |
+| `vw_get_stats` | read | ✅ live | Monthly quota (used/remaining), concurrency, totals, credits |
+| `vw_scan_history` | read | ✅ live | Paginated list of your scans; optional `status` filter |
+| `vw_scan_status` | read | ✅ live | Status of one scan by `check_uuid` (in_progress/completed/failed) |
+| `vw_scan_report` | read | ✅ live | Full JSON vulnerability report for a completed scan |
+| `vw_phish_history` | read | ✅ live | Paginated list of your phishing domain checks |
+| `vw_phish_status` | read | ✅ live | Live progress of one phishing check + top findings |
+| `vw_phish_report` | read | ✅ live | Full findings list of a phishing check (pagination & filters) |
+| `vw_phish_monitoring` | read | ✅ live | Brand domains this account watches for new lookalikes |
+| `vw_phish_monitoring_lookup` | read | ✅ live | Whether a domain is already monitored for phishing |
+| `vw_phish_safe_domains` | read | ✅ live | Lookalike hosts manually marked safe (durable allowlist) |
+| `vw_submit_scan` | **write** | 🚫 gated | Start an async scan of a URL (spends a scan credit) |
+| `vw_phish_check` | **write** | 🚫 gated | Start a phishing check for a brand domain |
+| `vw_phish_mark_safe` | **write** | 🚫 gated | Add a lookalike host to the safe list |
+| `vw_phish_unmark_safe` | **write** | 🚫 gated | Remove a host from the safe list |
+
+### Self-hosted bridge (this repository)
+
+The Python bridge ships the **core five** scan tools:
 
 | Tool | Auth | Description |
 | --- | --- | --- |
